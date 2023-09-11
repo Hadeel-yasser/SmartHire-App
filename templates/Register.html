@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Modern Business - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/Registration.css" rel="stylesheet" />
+    <title>Document</title>
+    <style>body{
+      background-color:rgb(126, 181, 213);
+  }
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" href="{{ url_for('index') }}"><img src="assets/LogoNavbar.png" width="82px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}"style="font-weight: bold;">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+          <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+              <img src="assets/Logo.png" width="800" height="600"
+                class="img-fluid">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" style="background-color:white;padding-top: 25px; padding-bottom: 15px; padding-left: 25px; padding-right: 25px; border-radius: 20px; opacity: 0.85;">
+                <form class="needs-validation" novalidate>
+                    <div class="mb-4">
+                      <input type="text" class="form-control" id="validationCustom01" placeholder="Full Name" required style="padding: 13px;">
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter your FullName.
+                      </div>                      
+                    </div>
+                    <div class="mb-4">
+                      <input type="email" class="form-control" id="validationCustom02" placeholder="Email address" required style="padding: 13px;">
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter your Email.
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <input type="text" pattern="[0-9]+" class="form-control" id="validationCustomUsername" placeholder="National ID" required style="padding: 13px;">
+                      <div class="invalid-feedback">
+                        Please enter your national ID.
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <input type="text" class="form-control" id="validationCustom03" placeholder="Birth Date" required style="padding: 13px;">
+                      <div class="invalid-feedback">
+                        Please provide a valid birth date.
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <input type="text" pattern="[0-9]+" class="form-control" id="validationCustom03" placeholder="Phone Number" required style="padding: 13px;">
+                      <div class="invalid-feedback">
+                        Please provide a valid Phone Number
+                      </div>
+                    
+                      <div class="form-outline mb-4" id="accountNumberSection" style="display: none;">
+                        <input type="text" class="form-control" id="validationCustom03" placeholder="Account Number" required style="padding: 13px;">
+                      </div>  
+                      <div class="form-outline mb-4" id="passwordSection" style="display: none;">
+                        <input type="text" class="form-control" id="validationCustom03" placeholder="Account Password" required style="padding: 13px;">
+                      </div>
+                    
+                      <div class="form-outline mb-4" id="bankAccountTypeSection" style="display: none;">
+                        <select id="bankAccountType" class="form-control">
+                          <option value="savings">Savings Account</option>
+                          <option value="checking">Checking Account</option>
+                          <option value="credit">Individual Retirment Account</option>
+                        </select>
+                      </div> 
+                      <br>
+
+                    <div class="mb-4">
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password" required style="padding: 13px;">
+                      <div class="invalid-feedback">
+                        Please enter a password.
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm password" required style="padding: 13px;">
+                      <div class="invalid-feedback">
+                        Please confirm your password.
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="submit">Sign up</button>
+                    </div>
+                    <div id="error-alert" style="display: none;">
+                      </div>                    
+                  </form>
+                  
+                  
+          </div>
+        </div>
+      </section>
+<script src="js/RegisterScript.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      
+</body>
+</html>

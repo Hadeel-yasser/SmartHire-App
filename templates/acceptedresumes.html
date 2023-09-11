@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="" />
+    <title>SmartHire</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="{{url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+<style>
+     .main-content {
+            margin-left: 250px; /* Adjust the margin as needed */
+            padding: 15px; /* Add padding for content */
+            width: 1150px;
+        }
+
+        /* Create a class for content on the right side */
+        .content-right {
+            display: flex;
+            justify-content: flex-end; /* Move content to the right */
+            margin-right: 20px; /* Add some right margin for spacing */
+        }
+     .sidebar {
+      width: 200px;
+      height: 100%; /* Adjust the height as needed */
+      background-color: rgb(126, 181, 213);
+      position: fixed;
+      top: 9%;
+      left: 0;
+      padding-top: 60px; /* Add some top padding to align with the header */
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 16px;
+      text-decoration: none;
+      color: white;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #e4e4e5;
+    }
+
+    /* Style for the active button */
+    .sidebar a.active {
+      background-color: #0074D9;
+    }
+
+    /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+  }
+
+  .Close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  </style>
+     <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+     <link
+         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+         rel="stylesheet">
+ 
+     <!-- Custom styles for this template-->
+     <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+   <!-- bootstrap core css -->
+   <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+ 
+   <!-- font awesome style -->
+   <link href="static/css/font-awesome.min.css" rel="stylesheet" />
+ 
+   <!-- Custom styles for this template -->
+   <link href="static/css/style.css" rel="stylesheet" />
+   <!-- responsive style -->
+   <link href="static/css/responsive.css" rel="stylesheet" />
+<body class="sub_page">
+
+    <div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+              <span>
+                SmartHire
+              </span>
+            </a>
+  
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class=""> </span>
+            </button>
+  
+           
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index') }}" style="margin-right: 10px;">Home<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}" style="margin-right: 10px;">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('service') }}" style="margin-right: 10px;">Services</a>
+              </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('contact') }}"style="margin-right: 10px;">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('features') }}"style="margin-right: 10px;">Features</a>
+                </li>
+                <li class="nav-item" >
+                  <a class="nav-link" href="{{ url_for('product') }}"style="margin-right: 10px;">About Product</span></a>
+                </li>
+                <li class="nav-item" >
+                  <a class="nav-link" href="{{ url_for('dashboard') }}"style="margin-right: 10px;">DashBoard <span class="sr-only">(current)</span></a>
+                </li>
+              </ul>
+              <a href="{{ url_for('Login') }}"class="quote_btn" style="margin-right: 10px; display: inline-block; padding: 10px 20px; background-color: #0074D9; color: #fff; text-decoration: none; border-radius: 5px; text-align: center; cursor: pointer;">Login</a>
+              <button onclick="startFreeTrial()">Free Trial</button>
+  
+              
+            </div>
+          </nav>
+        </div>
+        <div class="sidebar">
+          <a href="{{ url_for('startscreening') }}" id="startscreening-link">Start Screening</a>
+          <a href="{{ url_for('acceptedresumes') }}"id="acceptedresumes" class = "active">Accepted Resumes</a>
+          <a href="{{ url_for('candidates') }}"id="candidates">Candidates Analytics</a>
+        </div>
+         </head>
+<body id="page-top">
+   
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+ 
+
+<body id="page-top">
+
+
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+    
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+             
+                <!-- End of Topbar -->
+
+                <div class="main-content">
+                    <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Accepted CVS</h1>
+
+<br>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Candidate Name</th>
+                                        <!--th>Resume score</th-->
+                                        <th>Sentences</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="candidatesTableBody">
+                                    <!-- Table rows will be dynamically generated here -->
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+</div>
+            </div>
+        
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{{ url_for('Login') }}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal window for text display-->
+    <!-- The modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="Close">&times;</span>
+        <h2 id="modal-title">Modal Title</h2>
+        <div id="modal-content-container">
+          <!-- Content will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+   
+
+  document.addEventListener("DOMContentLoaded", function () {
+  // Use fetch to call the Flask route and retrieve buttonIds and values
+  fetch('/get_button_ids_and_values')
+      .then(response => response.json())
+      .then(data => {
+          // Data contains buttonIds and values
+          var buttonIds = data.button_ids;
+          var values = data.values;
+          // Get the table body element
+          //var candidatesTableBody = document.getElementById("candidatesTableBody");
+          var candidatesTableBody = document.querySelector("#candidatesTableBody");
+          
+          // Loop through the buttonIds and values to populate the table
+          for (var i = 0; i < buttonIds.length; i++) {
+              var candidateId = buttonIds[i];
+              var candidateName = values[i];
+              var row = document.createElement("tr");
+              row.innerHTML = `
+                  <td>${i+1}</td>
+                  <td>${candidateName}</td>
+                  <td>
+                      <button class="btn btn-primary view-sentences" data-candidate-id="${candidateId}">View Sentences</button>
+                  </td>
+                  <td>
+                      <button class="btn btn-primary view-summary" data-candidate-id="${candidateId}">View Summary</button>
+                  </td>
+              `;
+              candidatesTableBody.appendChild(row);
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+
+      document.addEventListener("click", function (event) {
+        // Check if the clicked element has the class "view-sentences"
+        if (event.target.classList.contains("view-sentences")) {
+            var candidateId = event.target.getAttribute("data-candidate-id");
+            viewSentences(candidateId);
+        }
+    
+        // Check if the clicked element has the class "view-summary"
+        if (event.target.classList.contains("view-summary")) {
+            var candidateId = event.target.getAttribute("data-candidate-id");
+            viewSummary(candidateId);
+        }
+      // Function to open the modal and load content with a title
+      
+      
+      });
+      
+
+
+    });
+
+    function openModal(title,content) {
+      var modal = document.getElementById("myModal");
+      var modalTitle = document.getElementById("modal-title");
+      var modalContentContainer = document.getElementById("modal-content-container");
+
+      modalTitle.textContent = title; // Set the modal title
+      modalContentContainer.innerHTML = content;
+      modal.style.display = "block";
+
+      // Close the modal when the close button is clicked
+      var closeBtn = document.getElementsByClassName("Close")[0];
+      closeBtn.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // Close the modal when the user clicks outside of it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    }
+
+
+    function viewSentences(candidateId) {
+        // Implement your logic to handle the "View Sentences" action here
+        // call fetch function to loop over the retrieved cv chunks
+        fetch('/view_sentences', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            candidateId: candidateId 
+          }),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Handle the response from Python if needed
+          var modalContent = data.formatted_sentences;
+          openModal("Matching Sentences From Resume", `<pre>${modalContent}</pre>`);
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+        //openModal("Matching Sentences", "content");
+    }
+
+    // Function to handle the "View Summary" button click
+    function viewSummary(candidateId) {
+        // Implement your logic to handle the "View Summary" action here
+        fetch('/view_summary', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            candidateId: candidateId 
+          }),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Handle the response from Python if needed
+          var modalContent = data.summary;
+          openModal("Resume Summary", modalContent);
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+    }
+
+    </script>
+    
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{url_for('static', filename='js/sb-admin-2.min.js')}}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{{url_for('static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+
+</body>
+
+</html>

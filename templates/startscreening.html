@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>SmartHire</title>
+<style>
+   h1 {
+            color: rgb(20, 18, 18);
+            text-align: center;
+            -webkit-text-stroke: 1px black;
+        }
+    
+        .cont {
+            position:relative;
+            left: 440px;
+            top: 80px;
+            color: rgb(126, 181, 213);;
+        }
+    
+        /* Styles for the username field */
+  
+        .sidebar {
+      width: 200px;
+      height: 100%; /* Adjust the height as needed */
+      background-color: rgb(126, 181, 213);
+      position: fixed;
+      top: 9%;
+      left: 0;
+      padding-top: 60px; /* Add some top padding to align with the header */
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 16px;
+      text-decoration: none;
+      color: white;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #e4e4e5;
+    }
+
+    /* Style for the active button */
+    .sidebar a.active {
+      background-color: #0074D9;
+    }
+    .steps-container {
+      width: 1000px; /* Set the width of the container */
+      height: calc(100vh - 180px); /* Adjust the height as needed based on your layout */
+      overflow-y: auto; /* Enable vertical scrolling */
+      /* border: 1px solid #ccc; */
+      padding: 10px;
+      position: fixed;
+      top: 180px; /* Adjust the top position to align with your header */
+      right: 10px; /* Move to the right to respect the sidebar */
+    }
+
+    .step {
+      margin-bottom: 20px;
+    }
+
+    .step-number {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .step-description {
+      margin-top: 10px;
+    }
+    .dropdown {
+      display: inline-block;
+    }
+
+    .dropdown select {
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+
+  <link href="static/css/font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="static/css/responsive.css" rel="stylesheet" />
+
+
+  <script>
+ function showImportMessage() {
+            // Display a success message to the user
+            alert("File was imported successfully!");
+        }    
+    // Get the current page pathname
+    const currentPagePath = window.location.pathname;
+  
+    // Get the clicked link's ID
+    const clickedLink = document.getElementById("startscreening-link");
+  
+    // Get all sidebar links
+    const sidebarLinks = document.querySelectorAll(".sidebar a");
+  
+    // Check if the clicked link matches the current page
+    if (currentPagePath === clickedLink.getAttribute("href")) {
+      clickedLink.classList.add("active");
+    }
+  
+    // Loop through sidebar links to find the active one
+    sidebarLinks.forEach(link => {
+      const linkPath = link.getAttribute("href");
+  
+      // Check if the current page matches the link's href
+      if (currentPagePath === linkPath) {
+        link.classList.add("active");
+      }
+    });
+    const steps = document.querySelectorAll('.step');
+    const submitButton = document.getElementById('submitButton');
+    let currentStep = 0;
+
+    // Function to show the next step
+    function showNextStep() {
+      steps[currentStep].classList.add('hidden-step');
+      currentStep++;
+      if (currentStep < steps.length) {
+        steps[currentStep].classList.remove('hidden-step');
+      } else {
+        // All steps are completed, trigger necessary actions
+        performFinalActions();
+      }
+    }
+
+    // Function to perform final actions when all steps are completed
+    function performFinalActions() {
+      // Add your logic here for what should happen when the "Submit" button is clicked
+      alert('All steps completed. Performing final actions.');
+    }
+
+    // Event listener for the "Submit" button
+    submitButton.addEventListener('click', showNextStep);
+    function importCVs() {  //for your python codeee
+
+
+  // Function to trigger the import action
+    // Call the Python backend API here
+    fetch('/import_cv', {
+      method: 'POST',
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the server, if needed
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+  function performSearch() {
+    
+
+    const searchQuery = document.getElementById('searchInput').value;
+    console.log(searchQuery)
+
+    const dropdown = document.getElementById("job-dropdown");
+    const selectedValue = dropdown.value;
+
+    const percentageOfCvs= document.getElementById("percentage").value;
+    // You can use the searchQuery value to perform your search actions
+    // For example, you can send it to the backend for processing
+    fetch('/searchprompt', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                searchQuery: searchQuery ,
+                selectedValue: selectedValue,
+                percentageOfCvs: percentageOfCvs
+              }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from Python if needed
+
+                // Display the alert message
+                alert("Prompt Received Successfully!");
+
+                // Append cv_name_id_dict as a query parameter to the redirect URL
+                //const cvNameIdDictQueryString = encodeURIComponent(JSON.stringify(data.cv_name_id_dict));
+                window.location.href = '/acceptedresumes';
+
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+          //alert("Prompt Received Successfully!");
+          //window.location.href = "/acceptedresumes";
+          }
+          //submitButton.addEventListener('click', performSearch);
+          
+
+    // Function to show the next step
+function showNextStep() {
+  // Check if the current step is filled
+  if (!isStepFilled(currentStep)) {
+    errorMessage.classList.remove('hidden');
+    // Scroll down by a certain number of pixels (adjust as needed)
+    window.scrollBy(0, 200); // Scroll down by 200 pixels
+    return;
+  }
+
+  steps[currentStep].classList.add('hidden-step');
+  currentStep++;
+  if (currentStep < steps.length) {
+    steps[currentStep].classList.remove('hidden-step');
+  } else {
+    // All steps are completed, trigger necessary actions
+    performFinalActions();
+  }
+}
+
+  
+
+
+
+ 
+  </script>
+  
+  <script src="static/js/create_core.js"></script>
+
+  <script src="static/js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="static/js/bootstrap.js"></script>
+  <script src="static/js/custom.js"></script>
+  <!-- Google Map -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script> -->
+  <!-- End Google Map -->
+  <div class="sidebar">
+    <a href="{{ url_for('startscreening') }}" id="startscreening-link" class = "active">Start Screening</a>
+    <a href="{{ url_for('acceptedresumes') }}"id="acceptedresumes">Accepted Resumes</a>
+    <a href="{{ url_for('candidates') }}"id="candidates">Candidates Analytics</a>
+  </div>
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <span>
+              SmartHire
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+         
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index') }}" style="margin-right: 10px;">Home<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}" style="margin-right: 10px;">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('service') }}" style="margin-right: 10px;">Services</a>
+              </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('contact') }}"style="margin-right: 10px;">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('features') }}"style="margin-right: 10px;">Features</a>
+                </li>
+                <li class="nav-item" >
+                  <a class="nav-link" href="{{ url_for('product') }}"style="margin-right: 10px;">About Product</span></a>
+                </li>
+                <li class="nav-item" >
+                  <a class="nav-link" href="{{ url_for('dashboard') }}"style="margin-right: 10px;">DashBoard <span class="sr-only">(current)</span></a>
+                </li>
+              </ul>
+              <a href="{{ url_for('Login') }}"class="quote_btn" style="margin-right: 10px; display: inline-block; padding: 10px 20px; background-color: #0074D9; color: #fff; text-decoration: none; border-radius: 5px; text-align: center; cursor: pointer;">Login</a>
+              <button onclick="startFreeTrial()">Free Trial</button>
+  
+              
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <div class="steps-container">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-description">Please choose the job position</div>
+    
+    <div class="dropdown">
+        <select id="job-dropdown">
+          <option value="" disabled selected>Job opening</option>
+          <option value="data_analyst">Data analyst</option>
+          <option value="tester">Tester</option>
+          <option value="software_engineer">Software Engineer</option>
+        </select>
+      </div>
+      
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-description">Import CVs</div>
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <br>
+        <label for="file">Select a file:</label>
+        <input type="file" name="file" id="file" style="display: none;" />
+        <button type="button" onclick="document.getElementById('file').click()">Choose File</button>
+        <input type="submit" value="Import" onclick="showImportMessage()" />
+      </form>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-description">Step Three</div>
+      <label for="searchInput">Enter your prompt:</label>
+  <input type="text" id="searchInput" placeholder="Search" />
+</div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-description">Specify the desired percentage of matching cvs </div>
+      <div>
+        <input type="text" id="percentage" placeholder="Enter percentage" required />
+      </div>
+    </div>
+    <br>
+    <br>
+    <button id="submit" onclick = "performSearch()"> Start Screening</button>
+    <div id="errorMessage" class="hidden">Please complete all steps before submitting.</div>
+    
+
+
+</body>
+
+</html>
