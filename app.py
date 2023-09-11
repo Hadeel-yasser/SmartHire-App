@@ -23,7 +23,7 @@ def create_core_view(selected_value):
     # Call your Python function with the selected_value
     result = create_core.create_cores(selected_value)
     folder_path = "E:\ITworx\CVs\Documents"+ "\\"+ result
-    #get_documents_in_folder(folder_path)
+    get_documents_in_folder(folder_path)
     print("Successfully index documents")
 
 
