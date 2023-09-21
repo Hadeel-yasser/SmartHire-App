@@ -39,7 +39,7 @@ def delete_core(core_name):
 
     # send a DELETE request to Solr to delete the "my_core" core
     response = requests.delete('http://localhost:8983/solr/admin/cores?action=UNLOAD&core='+core_name+'&deleteIndex=true')
-    return "Deleted core"
+    return response
 
 
 def create_folder_for_core(core_name):
@@ -61,6 +61,3 @@ def delete_documents_in_core(core_name):
 
 if __name__ == "__main__":
     pass
-    #core_name= create_cores('tester')
-    #create_folder_for_core(core_name)
-    #delete_documents_in_core('software_engineer')

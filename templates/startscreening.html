@@ -87,7 +87,43 @@
       padding: 10px;
       font-size: 16px;
     }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black overlay */
+      z-index: 9999; /* Ensure it appears above other content */
+  }
   </style>
+  
+  <title>Loading Indicator Example</title>
+    <style>
+      
+    
+        /* Styling for the loading indicator */
+        #loading-indicator {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            vertical-align: middle;
+            z-index: 9999;
+        }
+        #loading-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+    </style>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
@@ -99,6 +135,8 @@
   <!-- responsive style -->
   <link href="static/css/responsive.css" rel="stylesheet" />
 
+  <link href="static/css/loader.css" rel="stylesheet" />
+  
 
   <script>
  function showImportMessage() {
@@ -171,9 +209,15 @@
   }
   function performSearch() {
     
+    // Show the loading indicator
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = "block";
+
+    const loadingIndicator = document.getElementById("loader");
+    loadingIndicator.style.display = "block";
 
     const searchQuery = document.getElementById('searchInput').value;
-    console.log(searchQuery)
+    
 
     const dropdown = document.getElementById("job-dropdown");
     const selectedValue = dropdown.value;
@@ -194,13 +238,9 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Handle the response from Python if needed
-
+                overlay.style.display = 'none';
+                loadingIndicator.style.display = "none";
                 // Display the alert message
-                alert("Prompt Received Successfully!");
-
-                // Append cv_name_id_dict as a query parameter to the redirect URL
-                //const cvNameIdDictQueryString = encodeURIComponent(JSON.stringify(data.cv_name_id_dict));
                 window.location.href = '/acceptedresumes';
 
                 console.log(data);
@@ -208,10 +248,7 @@
             .catch(error => {
                 console.error('Error:', error);
             });
-          //alert("Prompt Received Successfully!");
-          //window.location.href = "/acceptedresumes";
           }
-          //submitButton.addEventListener('click', performSearch);
           
 
     // Function to show the next step
@@ -233,11 +270,6 @@ function showNextStep() {
     performFinalActions();
   }
 }
-
-  
-
-
-
  
   </script>
   
@@ -253,16 +285,17 @@ function showNextStep() {
   <!-- Google Map -->
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script> -->
   <!-- End Google Map -->
+  
+
+</head>
+
+<body class="sub_page">
   <div class="sidebar">
     <a href="{{ url_for('startscreening') }}" id="startscreening-link" class = "active">Start Screening</a>
     <a href="{{ url_for('acceptedresumes') }}"id="acceptedresumes">Accepted Resumes</a>
     <a href="{{ url_for('candidates') }}"id="candidates">Candidates Analytics</a>
   </div>
-
-</head>
-
-<body class="sub_page">
-
+  
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -359,6 +392,27 @@ function showNextStep() {
     <button id="submit" onclick = "performSearch()"> Start Screening</button>
     <div id="errorMessage" class="hidden">Please complete all steps before submitting.</div>
     
+   <!-- Overlay -->
+   <div id="overlay" class="overlay"></div> 
+<!-- Loading Indicator -->
+<div id="loader" class="loader">
+  <div>
+    <ul>
+      <!-- Use a scripting language like JavaScript to generate list items -->
+      <script>
+        var n = 0;
+        while (n < 6) {
+          document.write('<li><svg viewBox="0 0 90 120" fill="currentColor"><path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path></svg></li>');
+          n++;
+        }
+      </script>
+    </ul>
+  </div>
+  <span>Matching Resumes...</span>
+  <a class="dribbble" href="https://dribbble.com/shots/7425055-Book-Loader" target="_blank">
+    <img src="https://dribbble.com/assets/logo-small-2x-9fe74d2ad7b25fba0f50168523c15fda4c35534f9ea0b1011179275383035439.png" />
+  </a>
+</div>
 
 
 </body>
